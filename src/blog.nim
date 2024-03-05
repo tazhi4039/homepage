@@ -4,8 +4,8 @@ import mydb
 import db_connector/db_mysql
 
 # try:
-var db = open("0.0.0.0:3307", "root", "password", "mydb")
-db.exec(sql"CREATE TABLE IF NOT EXISTS articles (id SERIAL PRIMARY KEY, title TEXT, body TEXT)")
+# var db = open("0.0.0.0:3307", "root", "password", "mydb")
+# db.exec(sql"CREATE TABLE IF NOT EXISTS articles (id SERIAL PRIMARY KEY, title TEXT, body TEXT)")
 
 converter toString(x: VNode): string = $x
 
@@ -35,13 +35,13 @@ template articleCard*(article: Article): untyped =
 
 
 proc root(title: string, buttonText: string): VNode =
-  let articles = db.getArticles()
+  # let articles = db.getArticles()
   index:
     h1: title
     button(hx-get = "/articles", hx-target = "#main"): buttonText
-    tdiv(id = "main")
-    for article in articles:
-      articleCard(article)
+    # tdiv(id = "main")
+    # for article in articles:
+    #   articleCard(article)
 
 router myrouter:
   get "/":
@@ -53,17 +53,17 @@ router myrouter:
         textarea(name = "body")
         button: "Submit"
     resp html
-  post "/articles":
-    let article = db.saveArticle((title: request.params["title"],
-        body: request.params["body"]))
-    redirect "/articles/" & article.id.intToStr
-  get "/articles/@id":
-    let id = request.params["id"].parseInt()
-    let article = db.getArticles().filter((a) => a.id == id)[0]
-    let html = buildHtml tdiv:
-      h1: text article.title
-      p: text article.body
-    resp html
+  # post "/articles":
+  #   let article = db.saveArticle((title: request.params["title"],
+  #       body: request.params["body"]))
+  #   redirect "/articles/" & article.id.intToStr
+  # get "/articles/@id":
+  #   let id = request.params["id"].parseInt()
+  #   let article = db.getArticles().filter((a) => a.id == id)[0]
+  #   let html = buildHtml tdiv:
+  #     h1: text article.title
+  #     p: text article.body
+  #   resp html
 
 
   # get "/":
