@@ -1,0 +1,26 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Deploy to EC2
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        EC2_SSH_KEY: ${{ secrets.PRIVATE_KEY }}
+        EC2_INSTANCE_IP: ${{ secrets.HOST_NAME }}
+        EC2_USER_NAME: ${{ secrets.USER_NAME }}
+      run: |
+        echo "$EC2_SSH_KEY" > ec2_ssh_key.pem
+        chmod 600 ec2_ssh_key.pem
+        ssh -o StrictHostKeyChecking=no -i ec2_ssh_key.pem ${EC2_USER_NAME}@${EC2_INSTANCE_IP} 'docker compose build && docker compose up -d'

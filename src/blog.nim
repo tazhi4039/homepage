@@ -34,18 +34,22 @@ template articleCard*(article: Article): untyped =
         ): text article.title
 
 
-proc root(title: string, buttonText: string): VNode =
+proc root(title: string): VNode =
   # let articles = db.getArticles()
   index:
     h1: title
-    button(hx-get = "/articles", hx-target = "#main"): buttonText
-    # tdiv(id = "main")
+    tdiv(id = "main"): "色々と作っていきたい"
+    tdiv:
+      h2: "2024/03/06"
+      tdiv: "CIを入れてみた。動くと嬉しい"
+      # for article in articles:
+      #   articleCard(article)
     # for article in articles:
     #   articleCard(article)
 
 router myrouter:
   get "/":
-    resp root(title = "Hello, world!", buttonText = "Click me!")
+    resp root(title = "ホームページ")
   get "/articles":
     let html = buildHtml:
       form(action = "/articles", `method` = "post", hx-boost = "true"):
