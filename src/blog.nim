@@ -42,10 +42,10 @@ proc root(title: string): VNode =
     tdiv:
       h2: "2024/03/06"
       tdiv: "CIを入れてみた。動くと嬉しい"
-      # for article in articles:
-      #   articleCard(article)
-    # for article in articles:
-    #   articleCard(article)
+      h2: "2024/03/08"
+      tdiv: "CIが動いた。ネットの情報をかき集めてAWSでhttps化した。"
+      h3: "次の目標"
+      tdiv: "ローカル開発を楽にする。"
 
 router myrouter:
   get "/":
