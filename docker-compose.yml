@@ -9,7 +9,7 @@ services:
     depends_on:
       - db
     ports:
-      - "80:8080" # 必要に応じてポートを変更してください
+      - "443:8081" # 必要に応じてポートを変更してください
 
   db:
     container_name: db
