@@ -34,6 +34,7 @@
         "-r",
         "--verbose",
         "--mm:refc",
+        "-o:bin/blog",
         "-d:nimDebugDlOpen",
         "-d:debugKaraxDsl",
         "src/blog.nim"
