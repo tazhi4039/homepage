@@ -21,7 +21,7 @@ template index*(rest: untyped): untyped =
       title: text "my blog"
     body:
       nav(class = "container-fluid"):
-        ul: li: a(href = "/", class = "secondary"): strong: text "blog"
+        ul: li: a(href = "/", class = "secondary"): strong: text "azarashillのホームページ"
       main(class = "container"): rest
 
 template articleCard*(article: Article): untyped =
@@ -34,22 +34,35 @@ template articleCard*(article: Article): untyped =
         ): text article.title
 
 
-proc root(title: string): VNode =
+proc root(): VNode =
   # let articles = db.getArticles()
   index:
-    h1: title
     tdiv(id = "main"): "色々と作っていきたい"
     tdiv:
       h2: "2024/03/06"
       tdiv: "CIを入れてみた。動くと嬉しい"
       h2: "2024/03/08"
       tdiv: "CIが動いた。ネットの情報をかき集めてAWSでhttps化した。"
-      h3: "次の目標"
+      h4: "次の目標"
       tdiv: "ローカル開発を楽にする。"
+      h2: "2024/03/09"
+      tdiv: "普通にローカル実行できた。最近はtasks.jsonを使うのにハマっている。tasks.jsonにビルド&実行を登録していた、のだけれど、"
+      tdiv: "サーバーが起動している状態でタスクを開始するとタスクを止めるか再起動するか選べと言われるのが邪魔だった、のだけれど"
+      tdiv: "vscodeにはRestart Running Taskというコマンドがあるのを今知った。(stackoverflowに書いてあった)"
+      tdiv: "なのでそのコマンドを使って起動している。watchとかも出来ないことはないのでどうとでもなりそう。"
+      br: ""
+      tdiv: "pico css?はheaderタグにmbをつけているけどこのmarginの付け方は良くない。うっかりするとheaderと関連するものを上のテキストだと勘違いする"
+      h4: "課題"
+      ul:
+        li: "改行の度にtdivを作っていて面倒くさい。txtをimportしたりしたい"
+        li: "トップページしか無いのがあんまりよろしくない"
+        li: "更新履歴なんかを置いておきたい"
+      h2: "2024/03/09 その2"
+      tdiv: "この文章を「開発日誌」と位置づけることにする。日記のような内容はここには書かない。早く書きたいので別のページを作りたい。"
 
 router myrouter:
   get "/":
-    resp root(title = "ホームページ")
+    resp root()
   get "/articles":
     let html = buildHtml:
       form(action = "/articles", `method` = "post", hx-boost = "true"):
