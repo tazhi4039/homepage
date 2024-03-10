@@ -59,6 +59,22 @@ proc root(): VNode =
         li: "更新履歴なんかを置いておきたい"
       h2: "2024/03/09 その2"
       tdiv: "この文章を「開発日誌」と位置づけることにする。日記のような内容はここには書かない。早く書きたいので別のページを作りたい。"
+      h2: "2024/03/10"
+      tdiv: "Formの作り方の難しさについて考えていた。Formはどんな複雑なオブジェクトで、それをどんなに分割しようと最終的に一同に会して機能させなければいけないという点で複雑で"
+      tdiv: "おまけにonBlurやらonChangeやらイベントでvalidationを発火させるだのさせないだの、あるいはformatをするだのしないだのが絡んでくるので非常にややこしい。"
+      tdiv: "後者のややこしさはソフトウェアエンジニアリングに関わる難しさでもある。僕の言うソフトウェアエンジニアリングは「変化の必要が起きた際に素早く変更しておけるようにしておくこと」"
+      tdiv: "それから、「起こらない変化を予期して可能性を閉じたなるべくシンプルな設計にすること」を含む。"
+      tdiv: "なんかこの辺りをうまいことやっていきたい。"
+      h4: "仮説:Formにはユニットテストが必須である。"
+      tdiv: "言ってしまえば当たり前といえば当たり前なんだけど、Formにはユニットテストがあった方が良い。"
+      tdiv: "ユニットテストというか、Formコンポーネントに対するコンポーネントテスト。"
+      tdiv: "コンポーネントテストはオブジェクト構造がネストしていようとUIがネスト(というか配列？)になっていない限りは平たく扱うことが出来る。"
+      tdiv: "階層が複雑になりやすいFormにはユニットテストはかなり有効だと感じる(逆に、それ以外の場面でコンポーネントのテストを行うことに対して私はかなり懐疑的である)"
+      tdiv: "後者についても書くつもりがあったんだけど今日は疲れたのでおしまい。開発日誌と位置づけると言いつつ開発日誌ではないものを書いてしまった"
+      h4: "課題"
+      ul:
+        li: "課題が見えづらくなってきた。cssを自分で当てたい。tailwindを入れて、jitを使えるところまで持っていきたい。"
+        li: "文章を書くのが楽しすぎてnimないしhtmxの改善に全く踏み込めない。早くなんとかしたい。"
 
 router myrouter:
   get "/":
@@ -70,61 +86,6 @@ router myrouter:
         textarea(name = "body")
         button: "Submit"
     resp html
-  # post "/articles":
-  #   let article = db.saveArticle((title: request.params["title"],
-  #       body: request.params["body"]))
-  #   redirect "/articles/" & article.id.intToStr
-  # get "/articles/@id":
-  #   let id = request.params["id"].parseInt()
-  #   let article = db.getArticles().filter((a) => a.id == id)[0]
-  #   let html = buildHtml tdiv:
-  #     h1: text article.title
-  #     p: text article.body
-  #   resp html
-
-
-  # get "/":
-  #   let html = index:
-  #     h1: text "Join a room!"
-  #     form(action = "/chat", `method` = "get"):
-  #       label:
-  #         "Room".text
-  #         input(type = "text", name = "room")
-  #       label:
-  #         text "Username"
-  #         input(type = "text", name = "name")
-  #       input(type = "submit", value = "Join")
-  #   resp html
-  # get "/chat":
-  #   let html = index:
-  #     h1: text @"room"
-  #     tdiv(hx-ws = "connect:/chat/" & @"room" & "/" & @"name"):
-  #       p(id = "content")
-  #       form(hx-ws = "send", id = "message"): chatInput()
-  #   resp html
-  # get "/chat/@room/@name":
-  #   var ws = await newWebSocket(request)
-  #   var user = User(name: @"name", socket: ws)
-  #   try:
-  #     chatrooms.mgetOrPut(@"room", initHashSet[User]()).incl(user)
-  #     let joined = buildMessage:
-  #       italic: text user.name
-  #       italic: text " has joined the room"
-  #     chatrooms[@"room"].sendAll(joined)
-  #     while user.socket.readyState == Open:
-  #       let sentMessage = (await user.socket.receiveStrPacket()).parseJson["message"]
-  #       discard user.socket.send(chatInput())
-  #       let reply = buildMessage:
-  #         bold: text user.name
-  #         text ": " & sentMessage.getStr()
-  #       chatrooms[@"room"].sendAll(reply)
-  #   except:
-  #     chatrooms[@"room"].excl(user)
-  #     let left = buildMessage:
-  #       italic: text user.name
-  #       italic: text " has left the room"
-  #     chatrooms[@"room"].sendAll(left)
-  #   resp ""
 
 proc main() =
   let settings = newSettings(port = Port 8081)
