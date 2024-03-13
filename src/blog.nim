@@ -21,7 +21,10 @@ template index*(rest: untyped): untyped =
       title: text "my blog"
     body:
       nav(class = "container-fluid"):
-        ul: li: a(href = "/", class = "secondary"): strong: text "azarashillのホームページ"
+        ul:
+          li: a(href = "/", class = "secondary"): strong: text "azarashillのホームページ"
+          li: a(href = "https://github.com/tazhi4039/homepage",
+              class = "secondary", target = "_blank"): text "repository"
       main(class = "container"): rest
 
 template articleCard*(article: Article): untyped =
