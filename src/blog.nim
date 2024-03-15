@@ -68,6 +68,9 @@ proc root(): VNode =
   index:
     tdiv(id = "main"): "色々と作っていきたい"
     tdiv:
+      for text in ["## 2024/03/15 その3",
+          "レヴィ=ストロースとドメイン駆動開発は近いところにある気がしていて入門書だけじゃなくてそろそろ原著を読まなければいけない気がしている。"]:
+        vnim text
       for text in diary20240315_2:
         vnim text
       for text in diary20240315:
