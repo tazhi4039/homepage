@@ -15,19 +15,32 @@
         "reveal": "always",
         "panel": "shared"
       },
+      "problemMatcher": []
+    },
+    {
+      "label": "Run Current File",
+      "command": "nimble",
+      "args": [
+        "js",
+        "-r",
+        "--verbose",
+        "--mm:refc",
+        "-o:bin/blog",
+        "-d:nimDebugDlOpen",
+        "-d:debugKaraxDsl",
+        "${file}"
+      ],
+      "options": {
+        "cwd": "${workspaceRoot}"
+      },
+      "type": "shell",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
     },
     {
       "taskName": "Run module.nim",
-      // "command": "docker",
-      // "args": [
-      //   "compose",
-      //   "build",
-      //   "&&",
-      //   "docker",
-      //   "compose",
-      //   "up",
-      //   "-d",
-      // ],
       "command": "nimble",
       "args": [
         "c",

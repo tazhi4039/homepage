@@ -2,6 +2,7 @@ import std/[strutils, sequtils, asyncdispatch, sets, hashes, json, sugar]
 import karax/[karaxdsl, vdom], jester, ws, ws/jester_extra
 import mydb
 import db_connector/db_mysql
+import md
 
 # try:
 # var db = open("0.0.0.0:3307", "root", "password", "mydb")
@@ -37,17 +38,22 @@ template articleCard*(article: Article): untyped =
         ): text article.title
 
 
+
 proc root(): VNode =
-  # let articles = db.getArticles()
+  let hoge: seq[string] = @[
+    "## 2024/03/06",
+    "CIを入れてみた。動くと嬉しい",
+    "## 2024/03/08",
+    "CIが動いた。ネットの情報をかき集めてAWSでhttps化した。",
+    "#### 次の目標",
+    "ローカル開発を楽にする。"
+  ]
   index:
     tdiv(id = "main"): "色々と作っていきたい"
     tdiv:
-      h2: "2024/03/06"
-      tdiv: "CIを入れてみた。動くと嬉しい"
-      h2: "2024/03/08"
-      tdiv: "CIが動いた。ネットの情報をかき集めてAWSでhttps化した。"
-      h4: "次の目標"
-      tdiv: "ローカル開発を楽にする。"
+      tdiv:
+        for hog in hoge:
+          vnim hog
       h2: "2024/03/09"
       tdiv: "普通にローカル実行できた。最近はtasks.jsonを使うのにハマっている。tasks.jsonにビルド&実行を登録していた、のだけれど、"
       tdiv: "サーバーが起動している状態でタスクを開始するとタスクを止めるか再起動するか選べと言われるのが邪魔だった、のだけれど"
@@ -84,6 +90,12 @@ proc root(): VNode =
       tdiv: "ドメインに関わる名刺に適切な動詞を与えないことは直接インターフェースの貧弱さにつながる。"
       tdiv: "同様に、エンティティとエンティティの関係性を「idを紐づける」というようなDB視点の書き方をしてはいけない"
       tdiv: "バックエンドエンジニアが要件定義を行うとなぜかこういうことが起きる。不思議だ。"
+      for text in [
+        "## 2024/03/15",
+        "mdっぽい記法を使って書いてみたいのとnimらしいことをしていなかったのでちょっと試してみる",
+        "楽しいけど難しい。ユニットテストもあんまり親切じゃなくてエコサイクルが微妙な言語のデメリットを肌で感じている"]:
+        vnim text
+
 
 router myrouter:
   get "/":
