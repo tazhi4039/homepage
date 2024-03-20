@@ -9,7 +9,9 @@
       "command": "testament",
       "args": [
         "pattern",
-        "${file}"
+        "${file}",
+        "--verbose",
+        "--colors:on"
       ],
       "presentation": {
         "reveal": "always",
